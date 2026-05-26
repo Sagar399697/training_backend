@@ -1,31 +1,48 @@
-import mongoose, {Schema} from 'mongoose'
+import mongoose, { Schema } from 'mongoose';
 
-const menuSchema = new Schema(
-    {
-        resturant_id: {
-            type: mongoose.Types.ObjectId,
-            ref: 'Resturant'
-        },
-        item_name: {
-            type: String,
-            required: true,
-        },
-        item_price: {
-            type: mongoose.Schema.Types.Decimal128,
-            required: true
-        },
-        item_image: {
-            type: String, // Cloudinary Url
-        },
-        category: {
-            type: String,
-            lower: true
-        },
-        availability: {
-            type: Boolean,
-            required: true
-        }
+const menuSchema = new Schema({
+    restaurant: {
+        type: Schema.Types.ObjectId,
+        ref: 'Restaurant',
+        required: true
+    },
+
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    price: {
+        type: Number,
+        required: true
+    },
+
+    image: {
+        type: String // Cloudinary URL
+    },
+
+    category: {
+        type: String,
+        enum: ['snacks', 'meal', 'beverage', 'dessert'],
+        lowercase: true
+    },
+
+    isVeg: {
+        type: Boolean,
+        default: true
+    },
+
+    isAvailable: {
+        type: Boolean,
+        default: true
+    },
+
+    description: {
+        type: String,
+        trim: true
     }
-    ,{timestamps: true})
 
-export const Menu = mongoose.model('Menu', menuSchema)
+}, { timestamps: true });
+
+export const Menu = mongoose.model('Menu', menuSchema);

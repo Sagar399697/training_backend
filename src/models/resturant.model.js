@@ -1,29 +1,44 @@
-import mongoose, {Schema} from 'mongoose'
+import mongoose, { Schema } from 'mongoose';
 
-const resturantSchema = new Schema(
-    {
-        resturantName: {
-            type: String,
-            required: [true,"resturant name is requiredd"],
-            unique: true,
-            index: true
-        },
-        resturantAddress: {
-            type: String,
-            required: [true,"resturant address is requiredd"],
-            lower: true,
-            trim: true
-        },
-        phoneNumber: {
-            type: String,
-            unique: true,
-            required: [true,"phone number is requried"]
-        },
-        activeStatus: {
-            type: Boolean,
-            required: true,
-        }
+const restaurantSchema = new Schema({
+    restaurantName: {
+        type: String,
+        required: [true, "restaurant name is required"],
+        trim: true,
+        index: true
+    },
+
+    restaurantAddress: {
+        type: String,
+        required: [true, "restaurant address is required"],
+        lowercase: true,
+        trim: true
+    },
+
+    phoneNumber: {
+        type: String,
+        required: [true, "phone number is required"]
+    },
+
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+
+    campus: {
+        type: Schema.Types.ObjectId,
+        ref: "Campus",
+        required: true
+    },
+
+    openingTime: {
+        type: String
+    },
+
+    closingTime: {
+        type: String
     }
-    ,{timestamps: true})
 
-export const Resturant = mongoose.model('Resturant', resturantSchema)
+}, { timestamps: true });
+
+export const Restaurant = mongoose.model('Restaurant', restaurantSchema);
